@@ -1,5 +1,5 @@
 {
-    "name": "Wooppay/php-iso-639-converter",
+    "name": "wooppay/php-iso-639-converter",
     "description": "Php iso-639 converter",
     "keywords": ["iso", "iso-639", "639", "lang", "language", "laravel", "lang-converter"],
     "type": "library",
