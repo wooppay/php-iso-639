@@ -8,16 +8,6 @@ use \OutOfBoundsException;
 class ISO639
 {
 	/**
-	 * Array keys
-	 */
-	const KEY_OF_639_1 = 0;
-	const KEY_OF_639_2t = 1;
-	const KEY_OF_639_2b = 2;
-	const KEY_OF_639_3 = 3;
-	const KEY_OF_ISO_NAME = 4;
-	const KEY_OF_NATIVE_NAME = 5;
-
-	/**
 	 * ISO standard names
 	 */
 	const NAME_OF_639_1 = '639-1';
@@ -34,7 +24,7 @@ class ISO639
 	 * ['639-1', '639-2/t', '639-2/b', '639-3', 'ISO language name', 'Native name (endonym)']
 	 * ]
 	 */
-	protected $languages = [
+	private $languages = [
 		['ab', 'abk', 'abk', 'abk', 'Abkhaz', 'аҧсуа бызшәа, аҧсшәа'],
 		['aa', 'aar', 'aar', 'aar', 'Afar', 'Afaraf'],
 		['af', 'afr', 'afr', 'afr', 'Afrikaans', 'Afrikaans'],
@@ -222,6 +212,16 @@ class ISO639
 		['zu', 'zul', 'zul', 'zul', 'Zulu', 'isiZulu'],
 	];
 
+	/**
+	 * Array keys
+	 */
+	private const KEY_OF_639_1 = 0;
+	private const KEY_OF_639_2t = 1;
+	private const KEY_OF_639_2b = 2;
+	private const KEY_OF_639_3 = 3;
+	private const KEY_OF_ISO_NAME = 4;
+	private const KEY_OF_NATIVE_NAME = 5;
+
 	private $assocArray = [
 		self::NAME_OF_639_1 => self::KEY_OF_639_1,
 		self::NAME_OF_639_2t => self::KEY_OF_639_2t,
@@ -231,6 +231,8 @@ class ISO639
 		self::NATIVE_NAME => self::KEY_OF_NATIVE_NAME
 	];
 
+	private $exceptionMessage = 'No data for this language';
+
 	/**
 	 * @param string $from
 	 * @param string $to
@@ -239,12 +241,15 @@ class ISO639
 	 */
 	public function convertCode(string $from, string $to, string $codeOrName):string {
 		if(!isset($this->assocArray[$from]) || !isset($this->assocArray[$to]))
-			throw new OutOfBoundsException();
+			throw new OutOfBoundsException($this->exceptionMessage);
 
 		$arrayWithKeys = $this->getArrayWithRequiredKeys($this->assocArray[$from]);
 
-		if(!isset($arrayWithKeys[$codeOrName]) || $arrayWithKeys[$codeOrName][$this->assocArray[$to]])
-			throw new OutOfBoundsException();
+		if(!isset($arrayWithKeys[$codeOrName]) || !isset($arrayWithKeys[$codeOrName][$this->assocArray[$to]]))
+			throw new OutOfBoundsException($this->exceptionMessage);
+
+
+
 
 		$result = $arrayWithKeys[$codeOrName][$this->assocArray[$to]];
 
@@ -260,7 +265,7 @@ class ISO639
 	 */
 	private function getArrayWithRequiredKeys(int $index):array {
 		if(!isset($this->languages[$index]))
-			throw new OutOfBoundsException();
+			throw new OutOfBoundsException($this->exceptionMessage);
 
 		$result = array_column($this->languages, null, $index);
 
