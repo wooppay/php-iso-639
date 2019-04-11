@@ -1,0 +1,22 @@
+{
+    "name": "Wooppay/php-iso-639-converter",
+    "description": "Php iso-639 converter",
+    "keywords": ["iso", "iso-639", "639", "lang", "language", "laravel", "lang-converter"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nikolay Deriglazov",
+            "email": "nderiglazov@wooppay.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wooppay\\ISO639\\": "src/"
+        }
+    }
+}
