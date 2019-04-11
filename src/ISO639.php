@@ -248,9 +248,6 @@ class ISO639
 		if(!isset($arrayWithKeys[$codeOrName]) || !isset($arrayWithKeys[$codeOrName][$this->assocArray[$to]]))
 			throw new OutOfBoundsException($this->exceptionMessage);
 
-
-
-
 		$result = $arrayWithKeys[$codeOrName][$this->assocArray[$to]];
 
 		return $result;
