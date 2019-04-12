@@ -10,10 +10,10 @@
             "email": "nderiglazov@wooppay.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "php": ">=5.5.0",
-        "phpunit/phpunit": "^8.2@dev"
+        "phpunit/phpunit": "8.1.2"
     },
     "autoload": {
         "psr-4": {
