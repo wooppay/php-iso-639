@@ -234,9 +234,9 @@ class ISO639
 	private $exceptionMessage = 'No data for this language';
 
 	/**
-	 * @param string $from
-	 * @param string $to
-	 * @param string $codeOrName
+	 * @param string $from - name of input standard name (see useful consts of this class)
+	 * @param string $to - name of output standard name (see useful consts of this class)
+	 * @param string $codeOrName - standard code, native or ISO language name
 	 * @return mixed
 	 */
 	public function convertCode(string $from, string $to, string $codeOrName):string {
