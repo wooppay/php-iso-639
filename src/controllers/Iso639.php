@@ -104,6 +104,7 @@ class Iso639
 		['kr', 'kau', 'kau', 'kau', 'Kanuri', 'Kanuri'],
 		['ks', 'kas', 'kas', 'kas', 'Kashmiri', 'कश्मीरी, كشميري‎'],
 		['kk', 'kaz', 'kaz', 'kaz', 'Kazakh', 'қазақ тілі'],
+		['kz', 'kaz', 'kaz', 'kaz', 'Kazakh', 'қазақ тілі'],
 		['km', 'khm', 'khm', 'khm', 'Khmer', 'ខ្មែរ, ខេមរភាសា, ភាសាខ្មែរ'],
 		['ki', 'kik', 'kik', 'kik', 'Kikuyu, Gikuyu', 'Gĩkũyũ'],
 		['rw', 'kin', 'kin', 'kin', 'Kinyarwanda', 'Ikinyarwanda'],
