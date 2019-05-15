@@ -1,11 +1,11 @@
 <?php
 
 
-namespace Wooppay\ISO639;
+namespace wooppay\iso639\controllers;
 
 use \OutOfBoundsException;
 
-class ISO639
+class Iso639
 {
 	/**
 	 * ISO standard names
@@ -24,7 +24,7 @@ class ISO639
 	 * ['639-1', '639-2/t', '639-2/b', '639-3', 'ISO language name', 'Native name (endonym)']
 	 * ]
 	 */
-	private $languages = [
+	public $languages = [
 		['ab', 'abk', 'abk', 'abk', 'Abkhaz', 'аҧсуа бызшәа, аҧсшәа'],
 		['aa', 'aar', 'aar', 'aar', 'Afar', 'Afaraf'],
 		['af', 'afr', 'afr', 'afr', 'Afrikaans', 'Afrikaans'],
