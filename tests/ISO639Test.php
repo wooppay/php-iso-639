@@ -4,9 +4,10 @@
 namespace Wooppay\tests;
 
 
+use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
-use Wooppay\ISO639\ISO639;
-use \OutOfBoundsException;
+use Wooppay\iso639\controllers\Iso639;
+
 
 class ISO639Test extends TestCase
 {
@@ -21,35 +22,35 @@ class ISO639Test extends TestCase
 	public function testGet639_2tFrom639_1()
 	{
 		$converter = new ISO639();
-		$result = $converter->convertCode($converter::NAME_OF_639_1, $converter::NAME_OF_639_2t, self::ISO_639_1);
+		$result = $converter->convert(self::ISO_639_1, $converter::SUB_FORMAT_639_2t);
 		$this->assertTrue($result == self::ISO_639_2t);
 	}
 
 	public function testGet639_2bFrom639_1()
 	{
 		$converter = new ISO639();
-		$result = $converter->convertCode($converter::NAME_OF_639_1, $converter::NAME_OF_639_2b, self::ISO_639_1);
+		$result = $converter->convert(self::ISO_639_1, $converter::SUB_FORMAT_639_2b);
 		$this->assertTrue($result == self::ISO_639_2b);
 	}
 
 	public function testGet639_3From639_1()
 	{
 		$converter = new ISO639();
-		$result = $converter->convertCode($converter::NAME_OF_639_1, $converter::NAME_OF_639_3, self::ISO_639_1);
+		$result = $converter->convert(self::ISO_639_1, $converter::SUB_FORMAT_639_3);
 		$this->assertTrue($result == self::ISO_639_3);
 	}
 
 	public function testGetNativeNameFrom639_1()
 	{
 		$converter = new ISO639();
-		$result = $converter->convertCode($converter::NAME_OF_639_1, $converter::NATIVE_NAME, self::ISO_639_1);
+		$result = $converter->convert(self::ISO_639_1, $converter::NATIVE);
 		$this->assertTrue($result == self::NATIVE_NAME);
 	}
 
 	public function testGetISONameFrom639_1()
 	{
 		$converter = new ISO639();
-		$result = $converter->convertCode($converter::NAME_OF_639_1, $converter::ISO_NAME, self::ISO_639_1);
+		$result = $converter->convert(self::ISO_639_1, $converter::ISO);
 		$this->assertTrue($result == self::ISO_NAME);
 	}
 
@@ -58,6 +59,6 @@ class ISO639Test extends TestCase
 	{
 		$converter = new ISO639();
 		$this->expectException(OutOfBoundsException::class);
-		$converter->convertCode($converter::NAME_OF_639_1, $converter::NAME_OF_639_2t, self::FAKE_CODE);
+		$converter->convert(self::ISO_639_1, $converter::SUB_FORMAT_639_2t);
 	}
 }
