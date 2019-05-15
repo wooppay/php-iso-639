@@ -8,6 +8,10 @@
         {
             "name": "Nikolay Deriglazov",
             "email": "nderiglazov@wooppay.com"
+        },
+        {
+            "name": "Assylbek Mubarak",
+            "email": "amubarak@wooppay.com"
         }
     ],
     "minimum-stability": "stable",
