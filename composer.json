@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "wooppay\\iso639\\": "src/"
+            "Wooppay\\iso639\\": "src/"
         }
     }
 }
