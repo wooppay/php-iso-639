@@ -7,43 +7,34 @@ use OutOfBoundsException;
 use Yii;
 use yii2lab\extension\store\Store;
 
+/**
+ * @property  currentLanguge
+ */
 class Iso639
 {
 	/**
 	 * ISO standard names
 	 */
-	const NAME_OF_639_1 = '639-1';
-	const NAME_OF_639_2t = '639-2/t';
-	const NAME_OF_639_2b = '639-2/b';
-	const NAME_OF_639_3 = '639-3';
+	const SUB_FORMAT_639_1 = '639-1';
+	const SUB_FORMAT_639_2t = '639-2/t';
+	const SUB_FORMAT_639_2b = '639-2/b';
+	const SUB_FORMAT_639_3 = '639-3';
 
-	const NATIVE_NAME = 'Native';
-	const ISO_NAME = 'ISO';
+	const NATIVE = 'native_name_(endonym)';
+	const ISO = 'iso_language_name';
+
+	const RES_PATH = '@vendor/wooppay/php-iso-639-converter/src/res';
+
+	const MAIN_ISO_FAIL_NAME = '639';
 
 	private $format = 'php';
 	private $languages;
+	private $currentLang;
 	private $store;
+
 	private $fileName;
-	/**
-	 * Array keys
-	 */
-	private const KEY_OF_639_1 = 0;
-	private const KEY_OF_639_2t = 1;
-	private const KEY_OF_639_2b = 2;
-	private const KEY_OF_639_3 = 3;
-	private const KEY_OF_ISO_NAME = 4;
-	private const KEY_OF_NATIVE_NAME = 5;
 
-	private $assocArray = [
-		self::NAME_OF_639_1 => self::KEY_OF_639_1,
-		self::NAME_OF_639_2t => self::KEY_OF_639_2t,
-		self::NAME_OF_639_2b => self::KEY_OF_639_2b,
-		self::NAME_OF_639_3 => self::KEY_OF_639_3,
-		self::ISO_NAME => self::KEY_OF_ISO_NAME,
-		self::NATIVE_NAME => self::KEY_OF_NATIVE_NAME
-	];
-
-	private $exceptionMessage = 'No data for this language';
+	private $exceptionMessage = 'No data for language ';
 
 	public function __construct()
 	{
@@ -52,27 +43,12 @@ class Iso639
 		$this->updateLanguages();
 	}
 
-	/**
-	 * @param string $from - name of input standard name (see useful consts of this class)
-	 * @param string $to - name of output standard name (see useful consts of this class)
-	 * @param string $codeOrName - standard code, native or ISO language name
-	 * @return mixed
-	 */
-	public function convertCode(string $from, string $to, string $codeOrName): string
+
+
+	public function convert(string $codeOrName, string $to = self::SUB_FORMAT_639_1): string
 	{
-		if (!isset($this->assocArray[$from]) || !isset($this->assocArray[$to]))
-			throw new OutOfBoundsException($this->exceptionMessage);
-
-		$arrayWithKeys = $this->getArrayWithRequiredKeys($this->assocArray[$from]);
-
-		if (!isset($arrayWithKeys[$codeOrName]) || !isset($arrayWithKeys[$codeOrName][$this->assocArray[$to]]))
-			throw new OutOfBoundsException($this->exceptionMessage);
-
-		$result = $arrayWithKeys[$codeOrName][$this->assocArray[$to]];
-
-		return $result;
-
-
+		$this->defineLang($codeOrName);
+		return $this->currentLang[$to];
 	}
 
 	/**
@@ -90,6 +66,7 @@ class Iso639
 		return $result;
 	}
 
+
 	private function getStore()
 	{
 		if (!isset($this->store)) {
@@ -100,8 +77,7 @@ class Iso639
 
 	private function getFileName()
 	{
-		$this->fileName = Yii::getAlias('@vendor/wooppay/php-iso-639-converter/src/res');
-		$this->fileName = $this->fileName . '/639.php';
+		$this->fileName = Yii::getAlias(self::RES_PATH) . DS . self::MAIN_ISO_FAIL_NAME . DOT . $this->format;
 	}
 
 	public function updateLanguages()
@@ -109,4 +85,33 @@ class Iso639
 		$store = $this->getStore();
 		$this->languages = $store->load($this->fileName);
 	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getLanguages()
+	{
+		return $this->languages;
+	}
+
+	private function defineLang(string $codeOrName)
+	{
+		foreach ($this->languages as $language) {
+			if (in_array($codeOrName, $language)){
+				$this->currentLang = $language;
+				return;
+			}
+		}
+		throw new OutOfBoundsException($this->exceptionMessage);
+	}
+
+	public function defineFormat(string $codeOrName)
+	{
+		if(empty($this->currentLang))
+			$this->defineLang();
+		foreach ($this->currentLang as $key => $languageItem)
+			if ($languageItem == $codeOrName)
+				return $key;
+	}
+
 }
