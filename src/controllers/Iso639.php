@@ -101,7 +101,6 @@ class Iso639
 	private function getFileName()
 	{
 		$this->fileName = Yii::getAlias('@vendor/wooppay/php-iso-639-converter/src/res');
-		$this->fileName = $this->fileName . '/639.php';
 	}
 
 	public function updateLanguages()
